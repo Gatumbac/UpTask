@@ -141,5 +141,8 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+<<<<<<< HEAD
 
 /vendor/
+=======
+>>>>>>> 6630467bf45bfa6aa4d55dbf5f3a13a10e69c996
