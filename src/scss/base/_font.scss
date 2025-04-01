@@ -1,0 +1,25 @@
+@use 'base/variables' as v;
+
+h1, h2, h3 {
+    font-family: v.$headingFont;
+    margin: 0 0 calc(v.$spacing / 2) 0 ;
+    font-weight: 900;
+}
+
+h1 {
+    font-size: 6rem;
+}
+
+h2 {
+    font-size: 5rem;
+}
+
+h3 {
+    font-size: 4rem;
+}
+
+p {
+    font-size: 2rem;
+    color: v.$gray;
+    line-height: 1.8;
+}

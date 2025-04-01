@@ -1,0 +1,41 @@
+{
+  "name": "uptask",
+  "version": "1.0.0",
+  "description": "Software de administración de tareas en proyectos.",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "sass": "sass --watch src/scss:build/css",
+    "start": "gulp",
+    "css": "gulp css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Gatumbac/UpTask.git"
+  },
+  "keywords": [
+    "PHP",
+    "MVC",
+    "MYSQL",
+    "HTML",
+    "CSS",
+    "SASS",
+    "JAVASCRIPT",
+    "NPM"
+  ],
+  "author": "@gatumbac",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Gatumbac/UpTask/issues"
+  },
+  "homepage": "https://github.com/Gatumbac/UpTask#readme",
+  "devDependencies": {
+    "glob": "^11.0.1",
+    "gulp": "^5.0.0",
+    "gulp-sass": "^6.0.0",
+    "gulp-terser": "^2.1.0",
+    "modernizr": "^3.13.1",
+    "sass": "^1.84.0",
+    "sharp": "^0.33.5"
+  }
+}
