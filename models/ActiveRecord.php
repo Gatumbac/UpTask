@@ -3,8 +3,8 @@ namespace Model;
 
 abstract class ActiveRecord implements \JsonSerializable {
     protected static $db;
-    protected static $dbColumns = [];
     protected static $dbTable = '';
+    protected static $dbColumns = [];
     protected static $alerts = [];
     protected $id;
 

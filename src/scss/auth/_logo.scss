@@ -1,0 +1,13 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+.uptask {
+    @include m.logo(v.$cyan);
+    text-align: center;
+
+    font-size: 7rem;
+
+    @include m.tablet {
+        font-size: 10rem;
+    }
+}

@@ -13,12 +13,12 @@ body {
     font-size: 1.6rem;
     min-height: 100%;
 }
-.contenedor {
+.container {
     width: 95%;
     max-width: 120rem;
     margin: 0 auto;
 }
-.contenedor-sm {
+.container-sm {
     max-width: 70rem;
     margin: 0 auto;
 }
@@ -27,4 +27,10 @@ a {
 }
 img {
     max-width: 100%;
+}
+span {
+    font-weight: 700;
+}
+.app {
+    padding: 3rem 0;
 }

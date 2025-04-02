@@ -23,3 +23,14 @@ p {
     color: v.$gray;
     line-height: 1.8;
 }
+
+.tagline {
+    font-family: v.$headingFont;
+    font-weight: 900;
+    color: v.$black;
+    font-size: 3rem;
+}
+
+.page-description, .tagline {
+    text-align: center;
+}

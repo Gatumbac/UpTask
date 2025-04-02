@@ -1,0 +1,26 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+.button-default {
+    @include m.button(v.$gray, v.$white)
+}
+
+.button-cyan {
+    @include m.button(v.$cyan, v.$white)
+}
+
+.button-purple {
+    @include m.button(v.$purple, v.$white)
+}
+
+.button-pink {
+    @include m.button(v.$pink, v.$white)
+}
+
+.button-blue {
+    @include m.button(v.$blue, v.$white)
+}
+
+.button-indigo {
+    @include m.button(v.$indigo, v.$white)
+}

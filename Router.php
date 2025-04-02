@@ -28,7 +28,7 @@ class Router {
             call_user_func($fn, $this);
         } else {
             header("HTTP/1.0 404 Not Found");
-            $this->render('pages/default');
+            $this->render('templates/error404');
         }
     }
 
