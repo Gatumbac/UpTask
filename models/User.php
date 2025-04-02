@@ -11,6 +11,7 @@ class User extends ActiveRecord {
     protected $lastname;
     protected $email;
     protected $password;
+    protected $repeatedPassword;
     protected $confirmed;
     protected $token;
 
@@ -20,6 +21,7 @@ class User extends ActiveRecord {
         $this->lastname = $args['lastname'] ?? '';
         $this->email = $args['email'] ?? '';
         $this->password = $args['password'] ?? '';
+        $this->repeatedPassword = $args['password2'] ?? '';
         $this->confirmed = $args['confirmed'] ?? '0';
         $this->token = $args['token'] ?? '';
     }
@@ -85,6 +87,7 @@ class User extends ActiveRecord {
         self::validateName();
         self::validateEmail();
         self::validatePassword();
+        self::validateRepeatedPassword();
         return self::$alerts;
     }
 
@@ -111,5 +114,32 @@ class User extends ActiveRecord {
         } else if (strlen($this->password) < 6) {
             self::$alerts['error'][] = 'La contraseña debe tener al menos 6 caracteres';
         }
+    }
+
+    public function validateRepeatedPassword() {
+        if (!($this->password === $this->repeatedPassword)) {
+            self::$alerts['error'][] = 'Las contraseñas deben coincidir';
+        } 
+    }
+
+    public function validateUniqueUser() {
+        $userDB = self::where('email', $this->email);
+        $isUniqueUser = is_null($userDB);
+        if(!$isUniqueUser) {
+            self::$alerts['error'][] = 'El usuario ya está registrado';
+        }
+        return $isUniqueUser;
+    }
+
+    public function hashPassword() {
+        $this->password = password_hash($this->password, PASSWORD_BCRYPT);
+    }
+
+    public function generateToken() {
+        $this->token = uniqid();
+    }
+
+    public function isConfirmed() {
+        return $this->confirmed === '1';
     }
 }

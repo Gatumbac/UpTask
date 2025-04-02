@@ -2,6 +2,9 @@
     <?php include_once __DIR__ . '/../templates/site-name.php' ?>
     <div class="container-sm">
         <p class="page-description">Recupera tu acceso a UpTask</p>
+
+        <?php include_once __DIR__ . '/../templates/alerts.php' ?>
+        
         <form action="/olvide-password" method="POST">
             <div class="field">
                 <label for="email">Correo</label>
@@ -10,6 +13,7 @@
                     type="email"
                     placeholder="Tu correo"
                     name="email"
+                    value = "<?php echo $user->getEmail(); ?>";
                     required
                 >
             </div>

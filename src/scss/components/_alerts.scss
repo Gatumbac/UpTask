@@ -1,22 +1,29 @@
 @use 'base/variables' as v;
 @use 'base/mixins' as m;
+@use 'sass:color';
 
 .alert {
-    padding: calc(v.$spacing / 4);
+    padding: 1rem 1rem 1rem 2rem;
     color: v.$white;
     width: 100%;
     display: block;
-    margin-bottom: 2rem;
-    text-align: center;
+    margin-bottom: 1rem;
+    text-align: left;
     font-weight: 700;
     text-transform: uppercase;
-    background-color: v.$purple;
+    background-color: color.adjust(v.$cyan, $lightness: 60%);
+    font-size: 1.4rem;
+    max-width: 80rem;
 
     &.error {
-        background-color: v.$red;
+        background-color: color.adjust(v.$red, $lightness: 60%);
+        border-left: .5rem solid v.$red;
+        color: v.$red;
     }
 
     &.success {
-        background-color: v.$green;
+        background-color: color.adjust(v.$green, $lightness: 60%);
+        border-left: .5rem solid v.$green;
+        color: v.$green;
     }
 }

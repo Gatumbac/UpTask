@@ -61,7 +61,7 @@
                     id="password2"
                     type="password"
                     placeholder="Repite tu contraseña"
-                    name="password"
+                    name="password2"
                     required
                 >
             </div>

@@ -10,3 +10,5 @@ CREATE TABLE USERS (
 	confirmed TINYINT DEFAULT 0,
 	token VARCHAR(15)
 ); 
+
+INSERT INTO USERS(name, lastname, email, password) VALUES ('Gabriel', 'Tumbaco', 'gabrieltumbaco2005@outlook.es', 'gaboalej2005');

@@ -2,14 +2,14 @@
 namespace Classes;
 
 class FlashMessage {
-    public static function setMessage($mensaje, $tipo = 'error') {
+    public static function setMessage($message, $type = 'error') {
         if (isset($_SESSION) || session_status() === PHP_SESSION_ACTIVE) {
-            $_SESSION['flash_mensaje'] = $mensaje;
-            $_SESSION['flash_tipo'] = $tipo;
+            $_SESSION['flash_message'] = $message;
+            $_SESSION['flash_type'] = $type;
         }
     }
 
-    public static function setExito() {
+    public static function setSuccess() {
         self::setMessage('Operación exitosa', 'exito');
     }
 
@@ -18,20 +18,19 @@ class FlashMessage {
     }
     
     public static function getMessage() {
-        if (isset($_SESSION['flash_mensaje'])) {
-            $mensaje = $_SESSION['flash_mensaje'];
-            $tipo = $_SESSION['flash_tipo'];
+        if (isset($_SESSION['flash_message'])) {
+            $message = $_SESSION['flash_message'];
+            $type = $_SESSION['flash_type'];
             
-            // Limpiar el mensaje
-            unset($_SESSION['flash_mensaje']);
-            unset($_SESSION['flash_tipo']);
+            unset($_SESSION['flash_message']);
+            unset($_SESSION['flash_type']);
             
-            return [ $tipo => [$mensaje]];
+            return [$type => [$message]];
         }
         return [];
     }
     
     public static function hasMessage() {
-        return isset($_SESSION['flash_mensaje']);
+        return isset($_SESSION['flash_message']);
     }
 }

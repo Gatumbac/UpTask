@@ -13,33 +13,35 @@ class Email {
         $this->token = $token;
     }
 
-    public function enviarConfirmacion() {
-        $phpmailer = $this->configurar($this->email, $this->name, 'Confirma tu cuenta');
+    public function sendAccountConfirmation() {
+        $phpmailer = $this->setup($this->email, $this->name, 'Confirma tu cuenta');
 
         $content = "<html>";
         $content.="<p><strong>Hola " . $this->name . "</strong></p>";
-        $content.="<p>Has creado tu cuenta en App Salon, solo debes confirmarla presionando el siguiente enlace: </p>";
-        $content.="<a href='" . $_ENV['APP_URL'] . "/confirmar-cuenta?token=" . $this->token . "' >Confirmar cuenta</a>";
+        $content.="<p>Has creado tu cuenta en UpTask, solo debes confirmarla presionando el siguiente enlace: </p>";
+        $content .= "<a href='{$_ENV['APP_URL']}/confirmar-cuenta?token={$this->token}'>Confirmar cuenta</a>";
+        //$content.="<a href='" . $_ENV['APP_URL'] . "/confirmar-cuenta?token=" . $this->token . "' >Confirmar cuenta</a>";
         $content.="<p>Si tu no solicitaste esta cuenta, puedes ignorar este mensaje.</p>";
         $content.= "</html>";
         $phpmailer->Body = $content;
         $phpmailer->send();
     }
 
-    public function enviarInstruccionesPassword() {
-        $phpmailer = $this->configurar($this->email, $this->name, 'Reestablece tu password');
+    public function sendPasswordInstructions() {
+        $phpmailer = $this->setup($this->email, $this->name, 'Reestablece tu password');
 
         $content = "<html>";
         $content.="<p><strong>Hola " . $this->name . "</strong></p>";
-        $content.="<p>Has solicitado reestablecer tu password, sigue el siguiente enlace para hacerlo: </p>";
-        $content.="<a href='" . $_ENV['APP_URL'] . "/recuperar?token=" . $this->token . "' >Reestablecer password</a>";
+        $content.="<p>Has solicitado reestablecer tu password en UpTask, da click en el siguiente enlace para hacerlo: </p>";
+        $content .= "<a href='{$_ENV['APP_URL']}/resetear-password?token={$this->token}'>Reestablecer password</a>";
+        //$content.="<a href='" . $_ENV['APP_URL'] . "/recuperar?token=" . $this->token . "' >Reestablecer password</a>";
         $content.="<p>Si tu no solicitaste esta cuenta, puedes ignorar este mensaje.</p>";
         $content.= "</html>";
         $phpmailer->Body = $content;
         $phpmailer->send();
     }
 
-    public function configurar($destinatarioEmail, $destinatarioNombre, $asunto) {
+    public function setup($recipientEmail, $recipientName, $subject) {
         $phpmailer = new PHPMailer();
         $phpmailer->isSMTP();
         $phpmailer->Host = $_ENV['EMAIL_HOST'];
@@ -48,9 +50,9 @@ class Email {
         $phpmailer->Username = $_ENV['EMAIL_USER'];
         $phpmailer->Password = $_ENV['EMAIL_PASS'];
 
-        $phpmailer->setFrom('cuentas@appsalon.com');
-        $phpmailer->addAddress($destinatarioEmail, $destinatarioNombre);
-        $phpmailer->Subject = $asunto;
+        $phpmailer->setFrom('cuentas@uptask.com');
+        $phpmailer->addAddress($recipientEmail, $recipientName);
+        $phpmailer->Subject = $subject;
 
         $phpmailer->isHTML(true);
         $phpmailer->CharSet = 'UTF-8';
