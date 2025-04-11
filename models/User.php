@@ -116,6 +116,13 @@ class User extends ActiveRecord {
         }
     }
 
+    public function validateLogin() {
+        self::validateEmail();
+        if (!$this->password) {
+            self::$alerts['error'][] = 'La contraseña es obligatoria';
+        }
+    }
+
     public function validateRepeatedPassword() {
         if (!($this->password === $this->repeatedPassword)) {
             self::$alerts['error'][] = 'Las contraseñas deben coincidir';
@@ -141,5 +148,23 @@ class User extends ActiveRecord {
 
     public function isConfirmed() {
         return $this->confirmed === '1';
+    }
+
+    public function checkCredentials($password) {
+        $isCorrectPassword = password_verify($password, $this->getPassword());
+        $loginCondition = $isCorrectPassword && $this->isConfirmed();
+        if (!$loginCondition) {
+            self::$alerts['error'][] = 'Password Incorrecto o la cuenta aún no ha sido confirmada';
+        }
+        return $loginCondition;
+    }
+
+    public function initializeSession() {
+        session_start();
+        $_SESSION['id'] = $this->id;
+        $_SESSION['name'] = $this->name . ' ' . $this->lastname;
+        $_SESSION['email'] = $this->email;
+        $_SESSION['login'] = true;
+        redirect('/dashboard');
     }
 }

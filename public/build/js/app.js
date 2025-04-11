@@ -1,1 +1,1 @@
-alert("Hello UpTask");//# sourceMappingURL=app.js.map
+//# sourceMappingURL=app.js.map

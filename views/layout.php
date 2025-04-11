@@ -12,7 +12,7 @@
 </head>
 
 <body>
-    <main class="app">
+    <main class="<?php echo $cssDesign ?? 'app'; ?>">
         <?php echo $content; ?>
     </main>
     <?php echo $script ?? ''; ?>

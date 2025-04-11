@@ -6,16 +6,46 @@ use Classes\Email;
 
 class LoginController {
     public static function login(Router $router) {
+        $user = new User();
+
         $router->render('auth/login', [
-            'title' => 'Iniciar Sesión'
+            'title' => 'Iniciar Sesión',
+            'user' => $user
         ]);
     }
 
     public static function processLogin(Router $router) {
-        $router->render('auth/login');
+        $formUser = new User($_POST);
+        $formUser->validateLogin();
+        $alerts = User::getAlerts();
+        $auth = false;
+
+        if(empty($alerts)) {
+            $user = User::where('email', $formUser->getEmail());
+            if (!is_null($user)) {
+                $auth = $user->checkCredentials($formUser->getPassword());
+            } else {
+                User::setAlert('error', 'El usuario no está registrado');
+            }
+
+            if($auth) {
+                $user->initializeSession();
+            }
+
+            $alerts = User::getAlerts();
+        }
+
+        $router->render('auth/login', [
+            'title' => 'Iniciar Sesión',
+            'alerts' => $alerts,
+            'user' => $formUser
+        ]);
     }
 
     public static function logout() {
+        session_start();
+        $_SESSION = [];
+        redirect('/');
     }
 
     public static function signUp(Router $router) {

@@ -1,0 +1,65 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+.modal {
+    position: absolute;
+    background-color: rgb(0 0 0 / .8);
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    form {
+        max-width: 60rem;
+        background-color: v.$white;
+        padding: 2rem;
+        margin: 0 auto;
+        transform: translateY(-30rem);
+        transition-property: all;
+        transition-duration: 500ms;
+        transition-timing-function: ease-in-out;
+        opacity: 0;
+        border-radius: 1rem;
+
+        &.show {
+            position: relative;
+            top: 50%;
+            transform: translateY(-50%);
+            opacity: 1;
+        }
+
+        &.close {
+            transform: translateY(-200%);
+            opacity: 0;
+        }
+
+        legend {
+            text-align: center;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 2rem;
+            font-size: 2rem;
+        }
+
+        .newtask-submit {
+            @include m.button(v.$indigo, v.$white, 0rem);
+        }
+
+        .close-newtask {
+            @include m.button(v.$orange, v.$white, 0rem);
+        }
+
+        .newtask-options{
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+
+            @include m.tablet {
+                flex-direction: row;
+                justify-content: space-between;
+                gap: 0rem;
+            }
+        }
+    }
+}
+

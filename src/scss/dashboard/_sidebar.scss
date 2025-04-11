@@ -1,0 +1,42 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+@use 'sass:color';
+
+.sidebar {
+    background-color: v.$indigo;
+    padding: 2rem;
+    
+    h2 {
+        color: v.$white;
+        text-align: center;
+    }
+
+    .sidebar-nav {
+        margin-top: 2rem;
+        @include m.tablet {
+            margin-top: 5rem;
+        }
+
+        a {
+            text-align: center;
+            display: block;
+            color: v.$white;
+            margin-bottom: 1.5rem;
+            padding: .7rem;
+            transition-property: background-color;
+            transition-duration: 300ms;
+            text-transform: uppercase;
+            font-weight: bold;
+
+            &:hover,
+            &.activo {
+                background-color: color.adjust(v.$indigo, $lightness: -20%);
+                border-radius: .5rem;
+            }
+
+            @include m.tablet {
+                text-align: left;
+            }
+        }
+    }
+}

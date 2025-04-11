@@ -1,0 +1,36 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+@use 'sass:color';
+
+.topbar {
+    background-color: v.$white;
+    padding: 1rem 2rem;
+    box-shadow: 1px 12px 9px -13px rgba(0, 0, 0, .4);
+
+    @include m.tablet {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    p {
+        text-align: center;
+        font-size: 1.8rem;
+
+        @include m.tablet {
+            margin: 0;
+        }
+
+        span {
+            color: v.$indigo;
+        }   
+    }
+
+    .logout {
+        border-radius: .5rem;
+        @include m.button(color.adjust(v.$indigo, $lightness: -20%), v.$white, 0rem);
+        & {
+            padding: 1rem;
+        }
+    }
+}

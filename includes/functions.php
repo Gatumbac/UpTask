@@ -30,10 +30,3 @@ function isAuth() {
         exit;
     }
 }
-
-function isAdmin() {
-    if (!isset($_SESSION['admin'])) {
-        header('Location: /');
-        exit;
-    }
-}

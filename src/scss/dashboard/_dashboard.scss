@@ -1,0 +1,32 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+.dashboard {
+    background-color: v.$lightGray;
+    @include m.tablet {
+        display: flex;
+        height: 100vh;
+    }
+
+    .dashboard-content {    
+        flex: 1;
+    }
+
+    .projects {
+        padding: 2rem 0;
+        
+        h2 {
+            text-align: center;
+        }
+    }
+
+    form {
+        input:not([type="submit"]) {
+            background-color: v.$white;
+        }
+
+        input[type="submit"] {
+            @include m.button(v.$indigo, v.$white);
+        }
+    }
+}

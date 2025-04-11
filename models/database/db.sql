@@ -11,4 +11,18 @@ CREATE TABLE USERS (
 	token VARCHAR(15)
 ); 
 
-INSERT INTO USERS(name, lastname, email, password) VALUES ('Gabriel', 'Tumbaco', 'gabrieltumbaco2005@outlook.es', 'gaboalej2005');
+CREATE TABLE PROJECTS (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(60) NOT NULL,
+    url VARCHAR(32),
+    user_id INT NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES USERS(id) ON DELETE RESTRICT
+);
+
+CREATE TABLE TASKS (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	name VARCHAR(60) NOT NULL,
+	status TINYINT NOT NULL DEFAULT 0,
+	project_id INT NOT NULL,
+	FOREIGN KEY (project_id) REFERENCES PROJECTS(id) ON DELETE CASCADE	 
+);
