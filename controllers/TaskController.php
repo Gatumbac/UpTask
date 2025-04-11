@@ -6,7 +6,17 @@ use Model\Task;
 
 class TaskController {
     public static function index() {
-        $tasks = Task::belongsTo('project_id', '');
+        session_start();
+        isAuth();
+
+        $project_url = $_GET['id'] ?? '';
+        $project = Project::where('url', $project_url);
+        if(is_null($project) || $project->getUserId() != $_SESSION['id']) {
+            redirect('/dashboard');
+        }
+        
+        $tasks = Task::belongsTo('project_id', $project->getId());
+        echo json_encode(['tasks' => $tasks, 'result'=>true], JSON_UNESCAPED_UNICODE);
     }
 
     public static function create() {
@@ -25,9 +35,10 @@ class TaskController {
             $task->setProjectId($project->getId());
             $dbResult = $task->save();
             $response = [
-                'type' => 'success',
-                'message' => 'Tarea agregada exitosamente',
-                'id' => $dbResult['id']
+                'type' => $dbResult['result'] ? 'success' : 'error',
+                'message' => $dbResult['result'] ? 'Tarea agregada exitosamente' : 'Error al insertar el registro' ,
+                'id' => $dbResult['id'],
+                'projectId' => $project->getId()
             ];
         }
 

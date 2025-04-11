@@ -1,4 +1,7 @@
 (function() {
+    let tasks = [];
+    getTasks();
+
     const newTaskButton = document.querySelector("#newtask-button");
     newTaskButton.addEventListener('click', showTaskForm);
 
@@ -91,7 +94,9 @@
             showAlert(result.message, result.type, document.querySelector('.newtask-form legend'));
 
             if(result.type === 'success') {
-                removeElement(document.querySelector('.modal'), 3000)
+                removeElement(document.querySelector('.modal'), 1000)
+                addTaskVirtualDom(result.id, task, result.projectId);
+                showTasks();
             }
 
         } catch (error) {
@@ -109,6 +114,91 @@
         setTimeout(function() {
             element.remove();
         }, time);
+    }
+
+    async function getTasks() {
+        try {
+            const url = `/api/tareas?id=${getProjectId()}`;
+            const response = await fetch(url);
+            const result = await response.json();
+            tasks = result.tasks;
+            showTasks();
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    function showTasks() {
+        const tasksContainer = document.querySelector('#tasks-list')
+        cleanContainer(tasksContainer);
+
+        if(tasks.length === 0) {
+            const noTasksText = document.createElement('LI');
+            noTasksText.textContent = 'No existen tareas en el proyecto';
+            noTasksText.classList.add('no-tasks');
+            tasksContainer.appendChild(noTasksText);
+            return;
+        }
+
+        const states = {
+            '0' : 'Pendiente',
+            '1' : 'Completa'
+        }
+
+        const stateClasses = {
+            '0' : 'pending',
+            '1' : 'complete'
+        }
+
+        tasks.forEach((task) => {
+            const taskContainer = document.createElement('LI');
+            taskContainer.dataset.taskId = task.id;
+            taskContainer.classList.add('task');
+
+            const taskName = document.createElement('P');
+            taskName.textContent = task.name;
+
+            const optionsContainer = document.createElement('DIV');
+            optionsContainer.classList.add('tasks-options');
+
+            const taskStatusButton = document.createElement('BUTTON');
+            taskStatusButton.type = 'button';
+            taskStatusButton.classList.add('status-button');
+            taskStatusButton.classList.add(`${stateClasses[task.status]}`.toLowerCase());
+            taskStatusButton.textContent = states[task.status];
+            taskStatusButton.dataset.taskStatus = task.status;
+
+            const deleteTaskButton = document.createElement('BUTTON');
+            deleteTaskButton.type = 'button';
+            deleteTaskButton.classList.add('deleteTask-button');
+            deleteTaskButton.textContent = 'Eliminar';
+            deleteTaskButton.dataset.taskId = task.id;
+
+            optionsContainer.appendChild(taskStatusButton);
+            optionsContainer.appendChild(deleteTaskButton);
+
+            taskContainer.appendChild(taskName);
+            taskContainer.appendChild(optionsContainer);
+            console.log(taskContainer);
+            tasksContainer.appendChild(taskContainer);
+        });
+    }
+
+    function addTaskVirtualDom(id, name, projectId) {
+        const taskObject = {
+            id: String(id),
+            name: name,
+            status: '0', 
+            project_id: projectId
+        }
+
+        tasks = [...tasks, taskObject];
+    }
+
+    function cleanContainer(container) {
+        while(container.firstChild) {
+            container.removeChild(container.firstChild)
+        }
     }
 })(); 
 

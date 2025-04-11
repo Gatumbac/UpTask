@@ -1,10 +1,86 @@
 @use 'base/variables' as v;
 @use 'base/mixins' as m;
+@use 'sass:color';
 
 .newtask-container {
     display: flex;
     justify-content: center;
     .newtask-button {
         @include m.button(v.$cyan, v.$white);
+    }
+}
+
+#tasks-list {
+    list-style: none;
+    padding: 0;
+
+    .no-tasks {
+        text-align: center;
+        margin-top: 3rem;
+        font-size: 2rem;
+        font-weight: bold;
+    }
+
+    .task {
+        padding: .5rem 2rem;
+        border-bottom: 1px solid color.adjust(v.$lightGray, $lightness: -30%);
+        @include m.tablet {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        &:last-of-type {
+            border: none;
+        }
+
+        p {
+            font-size: 1.7rem;
+            color: v.$black;
+            text-align: center;
+        }
+
+        .tasks-options {
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+
+            @include m.tablet {
+                justify-content: center;
+                gap: 1rem;
+                margin-bottom: 0;
+            }
+
+            button {
+                border: none;
+                font-size: 1.5rem;
+                padding: 1rem 1.5rem;
+                text-transform: uppercase;
+                font-weight: 700;
+                border-radius: 1rem;
+                color: v.$white;
+
+                @include m.tablet {
+                    font-size: 1.2rem;
+                    padding: .5rem 1rem;
+                }
+
+                &:hover {
+                    cursor: pointer;
+                }
+            }
+
+            .complete {
+                background-color: v.$blue;
+            }
+
+            .pending {
+                background-color: v.$orange;
+            }
+
+            .deleteTask-button {
+                background-color: v.$red;
+            }
+        }
     }
 }

@@ -5,6 +5,8 @@
             <button type="button" class="newtask-button" id="newtask-button">&#43; Nueva Tarea</button>
         </div>
 
+        <ul id='tasks-list'></ul>
+
     </div>
 
 <?php include_once __DIR__ . '/footer.php' ?>

@@ -12,19 +12,10 @@ const sass = gulpSass(dartSass);
 //export default series(images, js, css, dev);
 export default series(js, css, dev);
 
-export function js2( done ) {
+export function js( done ) {
     src('src/js/**/*.js', {sourcemaps: true})
         .pipe(terser())
         .pipe(dest('public/build/js', {sourcemaps: '.'}));
-    done();
-}
-
-export function js(done) {
-    src('src/js/**/*.js', { sourcemaps: true })
-        .pipe(terser())
-        .on('error', (err) => console.error(err)) // Log errors
-        .pipe(dest('public/build/js', { sourcemaps: '.' }))
-        .on('end', () => console.log('JavaScript files processed!')); // Log success
     done();
 }
 
