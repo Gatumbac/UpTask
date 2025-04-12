@@ -2,7 +2,35 @@
 @use 'base/mixins' as m;
 @use 'sass:color';
 
+.mobile-bar {
+    background-color: v.$indigo;
+    padding: 2rem 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    @include m.tablet {
+        display: none;
+    }
+
+    h1 {
+        color: v.$white;
+        margin: 0;
+    }
+
+    .menu {
+        img {
+            width: .8rem;
+        }
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
+}
+
 .topbar {
+    display: none;
     background-color: v.$white;
     padding: 1rem 2rem;
     box-shadow: 1px 12px 9px -13px rgba(0, 0, 0, .4);

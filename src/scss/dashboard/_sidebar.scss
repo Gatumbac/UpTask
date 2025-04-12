@@ -3,25 +3,76 @@
 @use 'sass:color';
 
 .sidebar {
-    background-color: v.$indigo;
-    padding: 2rem;
+    opacity: 0;
+    height: 0;
+    transition-property: opacity;
+    transition-duration: 500ms;
+    overflow: hidden;
+    background-color: rgb(0 0 0 / .95);
     
+
+    @include m.tablet {
+        padding: 2rem;
+        display: block;
+        opacity: 1;
+        height: 100%;
+        background-color: v.$indigo;
+    }
+    
+    &.show-nav {    
+        padding: 2rem;
+        opacity: 1;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        bottom: 0;
+
+
+        @include m.tablet {
+            display: none;
+        }
+    }
+
+    &.close-nav {
+        opacity: 0;
+        overflow: hidden;
+        height: 0;
+    }
+
     h2 {
         color: v.$white;
         text-align: center;
+        font-size: 6.5rem;
+        margin-bottom: 3rem;
+
+        @include m.tablet {
+            font-size: 5rem;
+        }
+
+
     }
 
     .sidebar-nav {
         margin-top: 2rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-around;
+
         @include m.tablet {
             margin-top: 5rem;
+            display: block;
         }
 
         a {
+            font-size: 2rem;
             text-align: center;
+            width: 100%;
             display: block;
             color: v.$white;
-            margin-bottom: 1.5rem;
+            margin-bottom: 2.5rem;
             padding: .7rem;
             transition-property: background-color;
             transition-duration: 300ms;
@@ -29,13 +80,36 @@
             font-weight: bold;
 
             &:hover,
-            &.activo {
+            &.active {
                 background-color: color.adjust(v.$indigo, $lightness: -20%);
                 border-radius: .5rem;
             }
 
             @include m.tablet {
                 text-align: left;
+                font-size: 1.6rem;
+                margin-bottom: 2.5rem;
+            }
+        }
+
+        .close-menu {
+            margin-top: 3rem;
+            width: 4rem;
+
+            @include m.tablet {
+                display: none;
+            }
+            
+            img {
+                &:hover {
+                    cursor: pointer;
+                }
+            }
+        }
+
+        .close-session {
+            @include m.tablet {
+                display: none;
             }
         }
     }
