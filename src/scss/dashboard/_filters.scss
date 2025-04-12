@@ -1,0 +1,58 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+@use 'sass:color';
+
+.filters {
+    background-color: v.$white;
+    border-radius: 1rem;
+    padding: 2rem;
+
+    p {
+        margin: 0 0 2rem 0;
+        text-align: center;
+        color: v.$indigo;
+        font-weight: 900;
+        font-size: 2.4rem;
+
+        @include m.tablet {
+            margin: 0;
+        }
+    }
+
+    @include m.tablet {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .filter-inputs {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 3rem;
+
+        @include m.tablet {
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .field {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            @include m.tablet {
+                justify-content: center;
+                gap: 1rem;
+            }
+        }
+    }
+
+    input[type="radio"] {
+        accent-color: v.$indigo;
+        width: 1.7rem;
+        height: 1.7rem;
+    }
+}

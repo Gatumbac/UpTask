@@ -35,8 +35,8 @@ $router->get('/perfil', [DashboardController::class, 'profile']);
 //API for TASKS
 $router->get('/api/tareas', [TaskController::class, 'index']);
 $router->post('/api/tarea', [TaskController::class, 'create']);
-$router->get('/api/tarea/actualizar', [TaskController::class, 'update']);
-$router->get('/api/tarea/eliminar', [TaskController::class, 'delete']);
+$router->post('/api/tarea/actualizar', [TaskController::class, 'update']);
+$router->post('/api/tarea/eliminar', [TaskController::class, 'delete']);
 
 
 

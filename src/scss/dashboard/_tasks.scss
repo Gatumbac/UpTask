@@ -38,6 +38,10 @@
             font-size: 1.7rem;
             color: v.$black;
             text-align: center;
+
+            @include m.tablet {
+                text-align: left;
+            }
         }
 
         .tasks-options {
