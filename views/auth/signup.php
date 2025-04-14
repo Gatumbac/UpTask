@@ -15,7 +15,7 @@
                     type="text"
                     placeholder="Tu nombre"
                     name="name"
-                    value = "<?php echo $user->getName(); ?>";
+                    value = "<?php echo s($user->getName()); ?>";
                     required
                 >
             </div>
@@ -27,7 +27,7 @@
                     type="text"
                     placeholder="Tu Apellido"
                     name="lastname"
-                    value = "<?php echo $user->getLastName(); ?>";
+                    value = "<?php echo s($user->getLastName()); ?>";
                     required
                 >
             </div>
@@ -39,7 +39,7 @@
                     type="email"
                     placeholder="Tu correo"
                     name="email"
-                    value = "<?php echo $user->getEmail(); ?>";
+                    value = "<?php echo s($user->getEmail()); ?>";
                     required
                 >
             </div>

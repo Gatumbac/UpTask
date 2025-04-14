@@ -12,6 +12,7 @@ class User extends ActiveRecord {
     protected $email;
     protected $password;
     protected $repeatedPassword;
+    protected $currentPassword;
     protected $confirmed;
     protected $token;
 
@@ -22,6 +23,7 @@ class User extends ActiveRecord {
         $this->email = $args['email'] ?? '';
         $this->password = $args['password'] ?? '';
         $this->repeatedPassword = $args['password2'] ?? '';
+        $this->currentPassword = $args['currentPassword'] ?? '';
         $this->confirmed = $args['confirmed'] ?? '0';
         $this->token = $args['token'] ?? '';
     }
@@ -37,6 +39,10 @@ class User extends ActiveRecord {
     public function getLastname() {
         return $this->lastname;
     }
+
+    public function getFullName() {
+        return $this->name . ' ' . $this->lastname;
+    }
     
     public function getEmail() {
         return $this->email;
@@ -44,6 +50,10 @@ class User extends ActiveRecord {
     
     public function getPassword() {
         return $this->password;
+    }
+
+    public function getCurrentPassword() {
+        return $this->currentPassword;
     }
     
     public function getConfirmed() {
@@ -86,13 +96,19 @@ class User extends ActiveRecord {
         self::$alerts = [];
         self::validateName();
         self::validateEmail();
-        self::validatePassword();
-        self::validateRepeatedPassword();
+        self::validatePasswordForm();
+        return self::$alerts;
+    }
+
+    public function validateUpdate() {
+        self::$alerts = [];
+        self::validateName();
+        self::validateEmail();
         return self::$alerts;
     }
 
     public function validateName() {
-        if (!$this->name || strlen($this->lastname) < 3) {
+        if (!$this->name || strlen($this->name) < 3) {
             self::$alerts['error'][] = 'El nombre es obligatorio y debe ser válido';
         }
         if (!$this->lastname || strlen($this->lastname) < 3) {
@@ -110,16 +126,9 @@ class User extends ActiveRecord {
 
     public function validatePassword() {
         if (!$this->password) {
-            self::$alerts['error'][] = 'La contraseña es obligatoria';
+            self::$alerts['error'][] = "La contraseña es obligatoria";
         } else if (strlen($this->password) < 6) {
-            self::$alerts['error'][] = 'La contraseña debe tener al menos 6 caracteres';
-        }
-    }
-
-    public function validateLogin() {
-        self::validateEmail();
-        if (!$this->password) {
-            self::$alerts['error'][] = 'La contraseña es obligatoria';
+            self::$alerts['error'][] = "La contraseña debe tener al menos 6 caracteres";
         }
     }
 
@@ -129,6 +138,18 @@ class User extends ActiveRecord {
         } 
     }
 
+    public function validatePasswordForm() {
+        self::validatePassword();
+        self::validateRepeatedPassword();
+    }
+
+    public function validateLogin() {
+        self::validateEmail();
+        if (!$this->password) {
+            self::$alerts['error'][] = 'La contraseña es obligatoria';
+        }
+    }
+
     public function validateUniqueUser() {
         $userDB = self::where('email', $this->email);
         $isUniqueUser = is_null($userDB);
@@ -136,6 +157,15 @@ class User extends ActiveRecord {
             self::$alerts['error'][] = 'El usuario ya está registrado';
         }
         return $isUniqueUser;
+    }
+
+    public function validateEmailUpdate() {
+        $userDB = self::where('email', $this->email);
+        $isValidEmail = is_null($userDB) || $userDB->getId() === $this->getId();
+        if(!$isValidEmail){
+            self::$alerts['error'][] = 'El correo ya está registrado';
+        }
+        return $isValidEmail;
     }
 
     public function hashPassword() {
@@ -159,10 +189,18 @@ class User extends ActiveRecord {
         return $loginCondition;
     }
 
+    public function checkPasswordCredentials($password) {
+        $isCorrectPassword = password_verify($password, $this->getPassword());
+        if (!$isCorrectPassword) {
+            self::$alerts['error'][] = 'La contraseña actual de la cuenta es incorrecta';
+        }
+        return $isCorrectPassword;
+    }
+
     public function initializeSession() {
         session_start();
         $_SESSION['id'] = $this->id;
-        $_SESSION['name'] = $this->name . ' ' . $this->lastname;
+        $_SESSION['name'] = $this->getFullName();
         $_SESSION['email'] = $this->email;
         $_SESSION['login'] = true;
         redirect('/dashboard');

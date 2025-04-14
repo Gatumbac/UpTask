@@ -2,6 +2,7 @@
 namespace Controllers;
 
 use Model\Project;
+use Model\User;
 use MVC\Router;
 
 class DashboardController {
@@ -29,18 +30,7 @@ class DashboardController {
             'userName' => $_SESSION['name']
         ]);
     }
-
-    public static function profile(Router $router) {
-        session_start();
-        isAuth();
-        
-        $router->render('dashboard/profile', [
-            'title' => 'Perfil',
-            'cssDesign' => '',
-            'userName' => $_SESSION['name']
-        ]);
-    }
-
+    
     public static function processProjectCreation(Router $router) {
         session_start();
         isAuth();
