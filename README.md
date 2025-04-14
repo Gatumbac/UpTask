@@ -56,7 +56,6 @@ Puedes ver más imagenes [aquí](https://github.com/Gatumbac/UpTask/tree/main/as
 ![Imagen](assets/4.png)
 ![Imagen](assets/5.png)
 ![Imagen](assets/6.png)
-![Imagen](assets/14.png)
 ![Imagen](assets/7.png)
 ![Imagen](assets/8.png)
 ![Imagen](assets/9.png)
